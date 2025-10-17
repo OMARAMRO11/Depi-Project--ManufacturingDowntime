@@ -1,0 +1,122 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 343.87728792629048,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 782.27906006379351,
+            "y": 472.57064731284515
+          },
+          "nodeIndex": "dDowntime_factors",
+          "nodeLineageTag": "86b5a007-a82d-4422-bd02-1c64e0c44b39",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 287.38305001469371,
+            "y": 394
+          },
+          "nodeIndex": "fLine_downtime",
+          "nodeLineageTag": "7ece85f6-3741-41bd-b906-0abc14aae4d1",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 334.20156119318534,
+            "y": -50
+          },
+          "nodeIndex": "dLine_productivity",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 279
+          },
+          "nodeIndex": "dProducts",
+          "nodeLineageTag": "3df3ca64-8263-4306-a8c5-2c25c60a74be",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 689.95504599534036,
+            "y": 0
+          },
+          "nodeIndex": "dcalender",
+          "nodeLineageTag": "7a85cb1b-251e-460b-b5f4-e9bed43ca8a2",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1142.3830500146937,
+            "y": 198
+          },
+          "nodeIndex": "Key Measures",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 1426.3830500146937,
+            "y": 237.28532365642258
+          },
+          "nodeIndex": "Summarize_Factor",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1710.3830500146937,
+            "y": 237.28532365642258
+          },
+          "nodeIndex": "Summarize_products",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 70.95554390096882,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}
