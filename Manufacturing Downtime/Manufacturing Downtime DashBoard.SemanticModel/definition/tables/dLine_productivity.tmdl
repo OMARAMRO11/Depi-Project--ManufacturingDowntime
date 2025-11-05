@@ -1,0 +1,101 @@
+table dLine_productivity
+	lineageTag: f0a1575d-c59f-461c-b700-b975a7b33fe3
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cd72d5be-40d7-4acd-9e3b-b5085b85248d
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Product
+		dataType: string
+		lineageTag: 6b6e8d6a-20c1-49a3-b6a8-4e0204e4d690
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column Batch
+		dataType: string
+		lineageTag: 9a5762b0-dca8-4954-a0bb-1d18be036b8f
+		summarizeBy: none
+		sourceColumn: Batch
+
+		annotation SummarizationSetBy = Automatic
+
+	column Operator
+		dataType: string
+		lineageTag: cdac5902-795d-4768-877a-bdbd8b3a7e22
+		summarizeBy: none
+		sourceColumn: Operator
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Time' = DATEDIFF('dLine_productivity'[Start DateTime],'dLine_productivity'[End DateTime],MINUTE)
+		formatString: 0
+		lineageTag: d72ad5a9-562a-475d-a618-2a0a2b5377f6
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start DateTime'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b6f9800d-ef6c-46d6-8c35-7b6ffbea94bc
+		summarizeBy: none
+		sourceColumn: Start DateTime
+
+		variation Variation
+			isDefault
+			relationship: 9a363d1d-f735-4295-83af-80531f2cf861
+			defaultHierarchy: LocalDateTable_d02d3d0a-5f05-4615-9b4e-9722890a84f5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'End DateTime'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d604c4c7-59cf-4cbc-9e16-45d36b2aa646
+		summarizeBy: none
+		sourceColumn: End DateTime
+
+		variation Variation
+			isDefault
+			relationship: b6f16465-7636-4727-a104-26148448d8bf
+			defaultHierarchy: LocalDateTable_4bf8f59c-a0b2-4c31-b8d0-f3d7af9d1196.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dLine_productivity = m
+		mode: import
+		source = ```
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\asuss\OneDrive\Desktop\Manufacturing Downtime\Manufacturing Downtime\Manufacturing_Line_Productivity.xlsx"), null, true),
+				    #"Line productivity_Sheet" = Source{[Item="Line productivity",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Line productivity_Sheet", [PromoteAllScalars=true]),
+				    // Compound both Start and End Time with there date
+				    #"Added End/Start datetime" = 
+				    // End date
+				    Table.AddColumn(
+				        // Start date
+				        Table.AddColumn(
+				            #"Promoted Headers", // previous step
+				            "Start DateTime", each Date.From([Date]) & Time.From([Start Time])
+				        ),
+				     "End DateTime", each if Time.From([End Time]) < Time.From([Start Time]) then Date.AddDays(Date.From([Date]), 1) & Time.From([End Time]) else Date.From([Date]) & Time.From([End Time])
+				    ),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Added End/Start datetime",{"Date", "Product", "Batch", "Operator", "Start DateTime", "End DateTime"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Date", type date}, {"Start DateTime", type datetime}, {"End DateTime", type datetime}, {"Operator", type text}, {"Batch", type text}, {"Product", type text}})
+				in
+				    #"Changed Type"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
